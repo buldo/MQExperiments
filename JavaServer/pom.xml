@@ -104,5 +104,11 @@
             </plugin>
         </plugins>
     </build>
-
+    <dependencies>
+        <dependency>
+            <groupId>jnanomsg</groupId>
+            <artifactId>jnanomsg</artifactId>
+            <version>0.4.1</version>
+        </dependency>
+    </dependencies>
 </project>
