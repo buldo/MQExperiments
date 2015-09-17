@@ -6,16 +6,15 @@ namespace Domain
     /// <summary>
     /// Репозиторий фреймов
     /// </summary>
-    /// <typeparam name="T">Тип данных внутри фрейма</typeparam>
-    public class FrameQueueRepository<T>
+    public class FrameQueueRepository
     {
-        private readonly List<FrameQueue<T>> _queues = new List<FrameQueue<T>>();
+        private readonly List<FrameQueue> _queues = new List<FrameQueue>();
 
         /// <summary>
         /// Добавление очереди в репозиторий
         /// </summary>
         /// <param name="queue">Очередь</param>
-        public void Add(FrameQueue<T> queue)
+        public void Add(FrameQueue queue)
         {
             _queues.Add(queue);
         }
@@ -24,7 +23,7 @@ namespace Domain
         /// Добавление очереди в репозиторий
         /// </summary>
         /// <param name="queues">Очереди</param>
-        public void Add(IEnumerable<FrameQueue<T>> queues)
+        public void Add(IEnumerable<FrameQueue> queues)
         {
             _queues.AddRange(queues);
         }
@@ -35,7 +34,7 @@ namespace Domain
         /// <returns>
         /// Список очередей
         /// </returns>
-        public List<FrameQueue<T>> GetAll()
+        public List<FrameQueue> GetAll()
         {
             return _queues.ToList();
         }
@@ -49,7 +48,7 @@ namespace Domain
         /// <returns>
         /// Очередь с соответствующим Id или null
         /// </returns>
-        public FrameQueue<T> GetById(int id)
+        public FrameQueue GetById(int id)
         {
             return _queues.Find(o => o.Id == id);
         }
