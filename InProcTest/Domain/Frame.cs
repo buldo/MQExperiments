@@ -20,7 +20,7 @@
         /// </summary>
         /// <param name="queueId">Идентификатор очереди к которой относится паке</param>
         /// <param name="data">Данные внутри фрейма</param>
-        Frame(int queueId, int data)
+        internal Frame(int queueId, int data)
         {
             QueueId = queueId;
             Data = data;

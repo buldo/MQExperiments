@@ -1,9 +1,12 @@
-﻿namespace Domain
+﻿using System;
+using Domain.Statistics;
+
+namespace Domain
 {
     /// <summary>
     /// Интерфейс воркера
     /// </summary>
-    public interface IWorker
+    public interface IWorker : IDisposable
     {
         /// <summary>
         /// Идентификатор воркера
@@ -14,5 +17,7 @@
         /// Начать обработку сообщений
         /// </summary>
         void StartProcessing();
+
+        void SetStatisticsCollector(IStatisticsCollector statisticsCollector);
     }
 }

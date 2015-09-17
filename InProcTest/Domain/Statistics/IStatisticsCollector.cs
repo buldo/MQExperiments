@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain
+﻿namespace Domain.Statistics
 {
     public interface IStatisticsCollector
     {
@@ -23,5 +17,13 @@ namespace Domain
         /// Отчитывающийся воркер
         /// </param>
         void TaskProcessed(IWorker worker);
+
+        /// <summary>
+        /// Разрегистрация воркера
+        /// </summary>
+        /// <param name="worker">
+        /// Воркер для деригистрации
+        /// </param>
+        void UnregisterWorker(IWorker worker);
     }
 }

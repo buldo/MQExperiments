@@ -6,7 +6,7 @@ namespace Domain
     /// <summary>
     /// Репозиторий фреймов
     /// </summary>
-    public class FrameQueueRepository
+    public class FrameQueuesRepository
     {
         private readonly List<FrameQueue> _queues = new List<FrameQueue>();
 
@@ -51,6 +51,15 @@ namespace Domain
         public FrameQueue GetById(int id)
         {
             return _queues.Find(o => o.Id == id);
+        }
+
+
+        /// <summary>
+        /// Очистка репозитория
+        /// </summary>
+        public void Clear()
+        {
+            _queues.Clear();
         }
     }
 }

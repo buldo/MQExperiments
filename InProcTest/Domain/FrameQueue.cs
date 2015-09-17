@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -7,7 +8,7 @@ namespace Domain
     /// </summary>
     public class FrameQueue
     {
-        private readonly Queue<Frame> _internalQueue = new Queue<Frame>();
+        private readonly ConcurrentQueue<Frame> _internalQueue = new ConcurrentQueue<Frame>();
 
         public int Id { get; }
         
@@ -28,7 +29,11 @@ namespace Domain
 
             for (int i = 0; i < len; i++)
             {
-                ret.Add(_internalQueue.Dequeue());
+                Frame frame;
+                if (_internalQueue.TryDequeue(out frame))
+                {
+                    ret.Add(frame);
+                }
             }
 
             return ret;

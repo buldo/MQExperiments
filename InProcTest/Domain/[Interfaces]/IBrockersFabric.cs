@@ -1,6 +1,6 @@
 ﻿namespace Domain
 {
-    public interface IBrockerFabric
+    public interface IBrockersFabric
     {
         IBrocker CreateNew();
     }
