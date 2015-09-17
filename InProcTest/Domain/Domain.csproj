@@ -40,13 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseStatisticsCollector.cs" />
     <Compile Include="Frame`1.cs" />
     <Compile Include="FrameQueue`1.cs" />
     <Compile Include="FrameQueueRepository`1.cs" />
     <Compile Include="[Interfaces]\IReceiver.cs" />
+    <Compile Include="[Interfaces]\IStatisticsCollector.cs" />
     <Compile Include="[Interfaces]\IStrangeBalancer.cs" />
     <Compile Include="ProcessedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="[Interfaces]\IWorker.cs" />
+    <Compile Include="[Interfaces]\IWorkersFabric.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
