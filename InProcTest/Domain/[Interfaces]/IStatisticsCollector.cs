@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    interface IStatisticsCollector
+    public interface IStatisticsCollector
     {
         /// <summary>
         /// Регистрация в системе статистики

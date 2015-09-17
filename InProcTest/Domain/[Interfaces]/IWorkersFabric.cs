@@ -1,7 +1,7 @@
 ﻿namespace Domain
 {
-    interface IWorkersFabric
+    public interface IWorkersFabric
     {
-        IWorker CreateNewWorker(int id);
+        IWorker CreateNewWorker(int id, IStatisticsCollector collector);
     }
 }

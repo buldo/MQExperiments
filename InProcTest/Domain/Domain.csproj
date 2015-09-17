@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseStatisticsCollector.cs" />
+    <Compile Include="BaseWorker.cs" />
     <Compile Include="Frame`1.cs" />
     <Compile Include="FrameQueue`1.cs" />
     <Compile Include="FrameQueueRepository`1.cs" />
