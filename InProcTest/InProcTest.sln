@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NanoMsgRealization", "NanoMsgRealization\NanoMsgRealization.csproj", "{0BB5F837-F356-4105-8201-2465F8A41720}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Realizations", "Realizations", "{D1B8579E-20CD-4196-A97F-7DBD4BA90844}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,5 +36,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0BB5F837-F356-4105-8201-2465F8A41720} = {D1B8579E-20CD-4196-A97F-7DBD4BA90844}
 	EndGlobalSection
 EndGlobal
