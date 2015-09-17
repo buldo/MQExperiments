@@ -43,6 +43,8 @@
     <Compile Include="Frame`1.cs" />
     <Compile Include="FrameQueue`1.cs" />
     <Compile Include="FrameQueueRepository`1.cs" />
+    <Compile Include="IStrangeBalancer.cs" />
+    <Compile Include="ProcessedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
