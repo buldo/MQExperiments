@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Domain
 {
-    public interface IStrangeBalancer<T>
+    public interface IStrangeBalancer
     {
-        void Process(IEnumerable<Frame<T>> frames);
+        void Process(IEnumerable<Frame> frames);
 
         event EventHandler<ProcessedEventArgs> FramesProcessed;
     }

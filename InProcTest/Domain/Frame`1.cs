@@ -3,13 +3,12 @@
     /// <summary>
     /// Класс, описывающий отдельный фрейм
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class Frame<T>
+    public class Frame
     {
         /// <summary>
         /// Получает данные фрейма
         /// </summary>
-        public T Data { get; }
+        public int Data { get; }
 
         /// <summary>
         /// Получает идентификатор очереди
@@ -21,7 +20,7 @@
         /// </summary>
         /// <param name="queueId">Идентификатор очереди к которой относится паке</param>
         /// <param name="data">Данные внутри фрейма</param>
-        Frame(int queueId, T data)
+        Frame(int queueId, int data)
         {
             QueueId = queueId;
             Data = data;

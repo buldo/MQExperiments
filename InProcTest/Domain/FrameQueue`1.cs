@@ -5,10 +5,9 @@ namespace Domain
     /// <summary>
     /// Описывает очередь фреймов
     /// </summary>
-    /// <typeparam name="T">Тип фрейма</typeparam>
-    public class FrameQueue<T>
+    public class FrameQueue
     {
-        private readonly Queue<Frame<T>> _internalQueue = new Queue<Frame<T>>();
+        private readonly Queue<Frame> _internalQueue = new Queue<Frame>();
 
         public int Id { get; }
         
@@ -17,15 +16,15 @@ namespace Domain
             Id = id;
         }
 
-        public void Enqueue(Frame<T> item)
+        public void Enqueue(Frame item)
         {
             _internalQueue.Enqueue(item);
         }
 
-        public List<Frame<T>> DequeueAll()
+        public List<Frame> DequeueAll()
         {
             int len = _internalQueue.Count;
-            var ret = new List<Frame<T>>(len);
+            var ret = new List<Frame>(len);
 
             for (int i = 0; i < len; i++)
             {
