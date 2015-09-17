@@ -7,7 +7,7 @@ using Domain;
 
 namespace NanoMsgRealization
 {
-    public class NanoBrockerFabric: IBrockerFabric
+    public class NanoBrockersFabric: IBrockersFabric
     {
         public IBrocker CreateNew()
         {
