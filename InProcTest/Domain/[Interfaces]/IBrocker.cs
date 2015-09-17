@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Domain
 {
-    public interface IStrangeBalancer
+    public interface IBrocker
     {
         void Process(IEnumerable<Frame> frames);
 
