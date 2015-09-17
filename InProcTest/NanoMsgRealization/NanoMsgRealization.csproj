@@ -44,10 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NanoBalancer.cs" />
+    <Compile Include="NanoBrocker.cs" />
+    <Compile Include="NanoBrockerFabric.cs" />
     <Compile Include="NanoWorker.cs" />
     <Compile Include="NanoWorkersFabric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticPrefs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
