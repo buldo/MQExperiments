@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain;
 
-namespace NanoMsgRealization
+namespace NetMQRealization
 {
-    public class NanoWorkersFabric : IWorkersFabric
+    public class NetMQWorkersFabric : IWorkersFabric
     {
         public IWorker CreateNewWorker(int id)
         {
-            return new NanoWorker(id, StaticPrefs.PullUri, StaticPrefs.PushPullUri);
+            return new NetMQWorker(id, StaticPrefs.PullUri, StaticPrefs.PushPullUri, StaticPrefs.Context);
         }
     }
 }

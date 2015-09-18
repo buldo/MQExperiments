@@ -11,7 +11,7 @@ namespace NanoMsgRealization
     {
         public IBrocker CreateNew(int workersCnt)
         {
-            return new NanoBrocker(StaticPrefs.ReqRepUri, StaticPrefs.PushPullUri, workersCnt);
+            return new NanoBrocker(pushAddress:StaticPrefs.PushPullUri, pullAddress:StaticPrefs.PullUri, workersCnt:workersCnt);
         }
     }
 }

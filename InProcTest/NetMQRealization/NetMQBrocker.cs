@@ -9,44 +9,73 @@ using System.Threading;
 using System.Threading.Tasks;
 using Domain;
 using JetBrains.Annotations;
+using NetMQ;
+using NetMQ.Sockets;
 using NLog;
-using NNanomsg;
-using NNanomsg.Protocols;
 
-namespace NanoMsgRealization
+namespace NetMQRealization
 {
-    public class NanoBrocker : IBrocker, IDisposable
+    public class NetMQBrocker : IBrocker, IDisposable
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private readonly PullSocket _pullSocket = new PullSocket();
-        private readonly NanomsgListener _listener = new NanomsgListener();
+        private readonly PullSocket _pullSocket;
+        private readonly PushSocket _pushSocket;
 
-        private readonly PushSocket _pushSocket = new PushSocket();
+        private readonly string _pullAddress;
+        private readonly string _pushAddress;
 
         private readonly BinaryFormatter _formatter = new BinaryFormatter();
 
-        private readonly string _pushAddress;
-
         private bool _disposedValue = false; // Для определения избыточных вызовов
 
-        public NanoBrocker(string pushAddress, string pullAddress, int workersCnt)
+        public NetMQBrocker(NetMQContext context, string pushAddress, string pullAddress, int workersCnt)
         {
             _logger.Trace("Brocker created");
             _pushAddress = pushAddress;
+            _pullAddress = pullAddress;
 
             //_pushSocket.Bind(pushAddress);
+            _pullSocket = context.CreatePullSocket();
             _pullSocket.Bind(pullAddress);
-            _listener.AddSocket(_pullSocket);
-            _listener.ReceivedMessage += ListenerOnReceivedMessage;
+
+            _pushSocket = context.CreatePushSocket();
             
-            Task.Run(() => {
+            Task.Run(() =>
+            {
+                try
+                {
+
+                
                 while (true)
                 {
-                    _listener.Listen(null);
+                    var ba = _pullSocket.ReceiveFrameBytes();
+                    if (ba != null)
+                    {
+
+                        using (var ms = new MemoryStream())
+                        {
+                            ms.Write(ba, 0, ba.Length);
+                            ms.Position = 0;
+                            var data = (ProcessedEventArgs)_formatter.Deserialize(ms);
+                            _logger.Trace("Brocker received result queue {0}", data.QueueId);
+                            OnFramesProcessed(data);
+                        }
+                    }
+                    else
+                    {
+                        _logger.Trace("Brocker not received");
+                        Thread.Sleep(200);
+                    }
                 }
-            }
-            );
+                }
+                catch (Exception)
+                {
+
+                    _logger.Error("EXCEPTION");
+                }
+
+            });
 
             //Task.Run(() =>
             //{
@@ -85,7 +114,7 @@ namespace NanoMsgRealization
             }
         }
 
-        public void Process([NotNull]IEnumerable<Frame> frames)
+        public void Process(IEnumerable<Frame> frames)
         {
             var _formatter = new BinaryFormatter();
             using (var ms = new MemoryStream())
@@ -100,6 +129,7 @@ namespace NanoMsgRealization
 
         public event EventHandler<ProcessedEventArgs> FramesProcessed;
 
+        
         protected virtual void OnFramesProcessed(ProcessedEventArgs e)
         {
             FramesProcessed?.Invoke(this, e);

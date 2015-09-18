@@ -9,5 +9,7 @@ namespace Domain
         void Process(IEnumerable<Frame> frames);
 
         event EventHandler<ProcessedEventArgs> FramesProcessed;
+
+        void ConnectToWorkers(int workersCnt);
     }
 }

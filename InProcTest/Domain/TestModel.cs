@@ -53,6 +53,8 @@ namespace Domain
                 _workersRepository.Add(_workersFabric.CreateNewWorker(i));
             }
 
+            _brocker.ConnectToWorkers(workersCnt);
+
             List<Task> tasks = _workersRepository.GetAll().Select(worker => worker.StartProcessingAsync(_processorCancellationTokenSource.Token)).ToList();
 
             var generatorTask = _dataGenerator.StartGenerationAsync(_frameQueuesRepository, _generatorCancellationTokenSource.Token);

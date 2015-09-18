@@ -37,7 +37,7 @@ namespace Domain.Statistics
 
         public List<WorkerStatisticsCounter> GetCurrentStatisticsCounters()
         {
-            return _processedTasks.Select(o => (WorkerStatisticsCounter)o.Clone()).ToList();
+            return _processedTasks.ToList().Select(o => (WorkerStatisticsCounter)o.Clone()).ToList();
         }
     }
 }
