@@ -2,6 +2,6 @@
 {
     public interface IBrockersFabric
     {
-        IBrocker CreateNew();
+        IBrocker CreateNew(int workersCnt);
     }
 }

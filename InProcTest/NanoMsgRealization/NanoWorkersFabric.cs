@@ -11,7 +11,7 @@ namespace NanoMsgRealization
     {
         public IWorker CreateNewWorker(int id)
         {
-            return new NanoWorker(id, StaticPrefs.ReqRepUri);
+            return new NanoWorker(id, StaticPrefs.ReqRepUri, StaticPrefs.PushPullUri);
         }
     }
 }

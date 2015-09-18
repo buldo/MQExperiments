@@ -15,7 +15,9 @@ namespace Domain
 
         private readonly IWorkersFabric _workersFabric;
 
-        private readonly IBrocker _brocker;
+        private readonly IBrockersFabric _brockersFabric;
+
+        private IBrocker _brocker;
 
         private readonly DataGenerator _dataGenerator = new DataGenerator();
 
@@ -31,14 +33,14 @@ namespace Domain
         {
             StatisticsCollector = statisticsCollector;
 
+            _brockersFabric = brockersFabric;
             _workersRepository = new WorkersRepository(statisticsCollector);
             _workersFabric = workersFabric;
-
-            _brocker = brockersFabric.CreateNew();
         }
 
         public async Task StartAsync(int queuesCnt, int workersCnt)
         {
+            _brocker = _brockersFabric.CreateNew(workersCnt);
             _frameQueuesRepository.Clear();
             for (int i = 0; i < queuesCnt; i++)
             {

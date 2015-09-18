@@ -29,13 +29,15 @@ namespace Domain
 
         protected void ProcessFunction(int val)
         {
+            double a = -1;
             for (int i = 0; i < val; i++)
             {
-                var hash = _crc32.ComputeHash(BitConverter.GetBytes(val));
-                if ((0x3 & hash[0])  == 0x3)
-                {
-                    break;
-                }
+                a += i*2;
+                //var hash = _crc32.ComputeHash(BitConverter.GetBytes(val));
+                //if ((0x2 & hash[0]) == 0x2)
+                //{
+                //    break;
+                //}
             }
         }
     }

@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NLog;
 
 namespace Domain
 {
     internal class DataProcessor
     {
+        object lockobk = new object();
+        private Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IBrocker _brocker;
 
         private readonly Dictionary<int, bool> _unlockedQueues;
@@ -25,7 +28,12 @@ namespace Domain
 
         private void BrockerOnFramesProcessed(object sender, ProcessedEventArgs processedEventArgs)
         {
-            _unlockedQueues[processedEventArgs.QueueId] = true;
+            lock (lockobk)
+            {
+                _logger.Trace("queue {0} unlocked", processedEventArgs.QueueId);
+                _unlockedQueues[processedEventArgs.QueueId] = true;
+            }
+            
         }
 
         public async Task StartProcessingAsync(CancellationToken ct)
@@ -38,6 +46,12 @@ namespace Domain
                     {
                         if (_unlockedQueues[queue.Id])
                         {
+                            lock (lockobk)
+                            {
+                                _unlockedQueues[queue.Id] = false;
+                                _logger.Trace("queue {0} locked", queue.Id);
+                            }
+                            
                             _brocker.Process(queue.DequeueAll());
                         }
                     }

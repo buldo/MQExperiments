@@ -18,12 +18,13 @@ namespace Domain
 
                 while (!ct.IsCancellationRequested)
                 {
+                    Thread.Sleep(500);
                     foreach (var queue in list)
                     {
                         int cntToAdd = random.Next(1, 5);
                         for (int i = 0; i < cntToAdd; i++)
                         {
-                            queue.Enqueue(new Frame(queue.Id, random.Next()));
+                            queue.Enqueue(new Frame(queue.Id, random.Next(1,50000)));
                             ct.ThrowIfCancellationRequested();
                         }
                     }

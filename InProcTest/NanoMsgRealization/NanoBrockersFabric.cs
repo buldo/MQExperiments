@@ -9,9 +9,9 @@ namespace NanoMsgRealization
 {
     public class NanoBrockersFabric: IBrockersFabric
     {
-        public IBrocker CreateNew()
+        public IBrocker CreateNew(int workersCnt)
         {
-            return new NanoBrocker(StaticPrefs.ReqRepUri);
+            return new NanoBrocker(StaticPrefs.ReqRepUri, StaticPrefs.PushPullUri, workersCnt);
         }
     }
 }
