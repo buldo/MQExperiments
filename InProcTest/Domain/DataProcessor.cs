@@ -15,7 +15,7 @@ namespace Domain
 
         private List<FrameQueue> _queues;
 
-        public DataProcessor(List<FrameQueue> queues, IBrocker brocker)
+        public DataProcessor(List<FrameQueue> queues, IBrocker brocker, WorkersRepository workersRepository)
         {
             _brocker = brocker;
             _unlockedQueues = queues.ToDictionary(queue => queue.Id, queue => true);
@@ -28,9 +28,8 @@ namespace Domain
             _unlockedQueues[processedEventArgs.QueueId] = true;
         }
 
-        public async Task StartGeneratingAsync(CancellationToken ct)
+        public async Task StartProcessingAsync(CancellationToken ct)
         {
-
             await Task.Run(() =>
             {
                 while (!ct.IsCancellationRequested)

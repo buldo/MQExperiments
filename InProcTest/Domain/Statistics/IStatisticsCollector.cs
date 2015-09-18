@@ -1,4 +1,6 @@
-﻿namespace Domain.Statistics
+﻿using System.Collections.Generic;
+
+namespace Domain.Statistics
 {
     public interface IStatisticsCollector
     {
@@ -25,5 +27,7 @@
         /// Воркер для деригистрации
         /// </param>
         void UnregisterWorker(IWorker worker);
+
+        List<WorkerStatisticsCounter> GetCurrentStatisticsCounters();
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Domain.Statistics;
 
 namespace Domain
@@ -16,7 +18,7 @@ namespace Domain
         /// <summary>
         /// Начать обработку сообщений
         /// </summary>
-        void StartProcessing();
+        Task StartProcessingAsync(CancellationToken ct);
 
         void SetStatisticsCollector(IStatisticsCollector statisticsCollector);
     }

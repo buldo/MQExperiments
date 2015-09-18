@@ -5,12 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InProcTest"
         xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
+        xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525"
-        d:DataContext="{d:DesignInstance local:MainViewModel}"
-        mvvm:ViewModelLocator.AutoWireViewModel="true"
-        >
+        d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
+        mvvm:ViewModelLocator.AutoWireViewModel="true">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Очередей:" />
+                <xctk:IntegerUpDown Grid.Row="0" Grid.Column="1" Value="{Binding QueuesCnt}" Minimum="1" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Воркеров:" />
+                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Value="{Binding WorkersCnt}" Minimum="1" />
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Start" Command="{Binding StartCommand}"/>
+                <Button Grid.Column="1" Content="Stop" Command="{Binding StopCommand}"/>
+            </Grid>
+        </StackPanel>
+        <DataGrid Grid.Column="1" ItemsSource="{Binding StatisticsCollection}"/>
     </Grid>
 </Window>

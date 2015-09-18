@@ -1,8 +1,11 @@
-﻿namespace Domain
+﻿using System;
+
+namespace Domain
 {
     /// <summary>
     /// Класс, описывающий отдельный фрейм
     /// </summary>
+    [Serializable]
     public class Frame
     {
         /// <summary>

@@ -28,6 +28,7 @@ namespace Domain
 
             _statisticsCollector.RegisterWorker(worker);
             _workers.Add(worker);
+
         }
 
         public void Clear()
@@ -40,5 +41,11 @@ namespace Domain
 
             _workers.Clear();
         }
+
+        public List<IWorker> GetAll()
+        {
+            return _workers.ToList();
+        } 
+
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 
 namespace Domain.Statistics
 {
-    public class WorkerStatisticsCounter
+    public class WorkerStatisticsCounter : ICloneable
     {
         private long _eventsCnt;
 
@@ -29,6 +30,11 @@ namespace Domain.Statistics
         public void IncreaseCounter()
         {
             Interlocked.Increment(ref _eventsCnt);
+        }
+
+        public object Clone()
+        {
+            return new WorkerStatisticsCounter(WorkerId) {EventsCnt = EventsCnt};
         }
     }
 }

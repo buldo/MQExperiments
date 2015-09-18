@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using Domain;
@@ -11,19 +14,28 @@ namespace NanoMsgRealization
 {
     public class NanoBrocker : IBrocker, IDisposable
     {
-        private readonly RequestSocket _socket;
+        private readonly RequestSocket _socket = new RequestSocket();
+        private readonly NanomsgListener _listener = new NanomsgListener(); 
+        private readonly IFormatter _formatter = new BinaryFormatter();
 
         private bool _disposedValue = false; // Для определения избыточных вызовов
 
         public NanoBrocker(string address)
         {
-            _socket = new RequestSocket();
             _socket.Connect(address);
+            _listener.AddSocket(_socket);
+            _listener.ReceivedMessage += ListenerOnReceivedMessage;
+//            Task.Run(() => _listener.Listen(null));
+
         }
 
         public void Process(IEnumerable<Frame> frames)
         {
-            
+            using (var ms = new MemoryStream())
+            {
+                _formatter.Serialize(ms, frames.ToList());
+                _socket.Send(ms.ToArray());
+            }
         }
 
         public event EventHandler<ProcessedEventArgs> FramesProcessed;
@@ -33,8 +45,20 @@ namespace NanoMsgRealization
             FramesProcessed?.Invoke(this, e);
         }
 
+        private void ListenerOnReceivedMessage(int socketId)
+        {
+            var ba = _socket.Receive();
+
+            using (var ms = new MemoryStream())
+            {
+                ms.Write(ba,0,ba.Length);
+                var data = (ProcessedEventArgs)_formatter.Deserialize(ms);
+                OnFramesProcessed(data);
+            }
+        }
+
         #region IDisposable Support
-        
+
 
         protected virtual void Dispose(bool disposing)
         {

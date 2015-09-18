@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Domain.Statistics;
 
@@ -49,13 +51,19 @@ namespace Domain
                 _workersRepository.Add(_workersFabric.CreateNewWorker(i));
             }
 
+            List<Task> tasks = _workersRepository.GetAll().Select(worker => worker.StartProcessingAsync(_processorCancellationTokenSource.Token)).ToList();
+
             var generatorTask = _dataGenerator.StartGenerationAsync(_frameQueuesRepository, _generatorCancellationTokenSource.Token);
             
-            var dataProcessor = new DataProcessor(_frameQueuesRepository.GetAll(), _brocker);
-            var processorTask = dataProcessor.StartGeneratingAsync(_processorCancellationTokenSource.Token);
+            var dataProcessor = new DataProcessor(_frameQueuesRepository.GetAll(), _brocker, _workersRepository);
+            var processorTask = dataProcessor.StartProcessingAsync(_processorCancellationTokenSource.Token);
 
             await generatorTask;
             await processorTask;
+            foreach (var task in tasks)
+            {
+                await task;
+            }
         }
 
         public void Stop()

@@ -1,36 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using JetBrains.Annotations;
 
 namespace Domain.Statistics
 {
-    internal class BaseStatisticsCollector : IStatisticsCollector
+    public class BaseStatisticsCollector : IStatisticsCollector
     {
-        public List<WorkerStatisticsCounter> ProcessedTasks { get; } = new List<WorkerStatisticsCounter>();
+        private List<WorkerStatisticsCounter> _processedTasks { get; } = new List<WorkerStatisticsCounter>();
 
         public void RegisterWorker([NotNull]IWorker worker)
         {
-            if (ProcessedTasks.Exists(o => o.WorkerId == worker.Id))
+            if (_processedTasks.Exists(o => o.WorkerId == worker.Id))
             {
                 throw new ArgumentException("Element with this id is already created");
             }
 
-            ProcessedTasks.Add(new WorkerStatisticsCounter(worker.Id));
+            worker.SetStatisticsCollector(this);
+            _processedTasks.Add(new WorkerStatisticsCounter(worker.Id));
         }
 
         public void TaskProcessed([NotNull]IWorker worker)
         {
-            ProcessedTasks.Find(o => o.WorkerId == worker.Id)?.IncreaseCounter();
+            _processedTasks.Find(o => o.WorkerId == worker.Id)?.IncreaseCounter();
         }
 
         public void UnregisterWorker([NotNull]IWorker worker)
         {
-            var counter = ProcessedTasks.Find(o => o.WorkerId == worker.Id);
+            var counter = _processedTasks.Find(o => o.WorkerId == worker.Id);
             if (counter != null)
             {
-                ProcessedTasks.Remove(counter);
+                _processedTasks.Remove(counter);
             }
+        }
+
+        public List<WorkerStatisticsCounter> GetCurrentStatisticsCounters()
+        {
+            return _processedTasks.Select(o => (WorkerStatisticsCounter)o.Clone()).ToList();
         }
     }
 }
