@@ -69,10 +69,7 @@ namespace NetMQFanInOut
                                 }
                             }
 
-                            var evArgs = new ProcessedEventArgs(qId);
-                            var toSend = JsonConvert.SerializeObject(evArgs);
-                            sender.SendFrame(toSend);
-                            _logger.Trace("Worker {0} sended data {1}", Id, toSend);
+                            OnReady(qId);
                         }
                     }
                 }

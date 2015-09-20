@@ -23,19 +23,21 @@ namespace Domain
             _brocker = brocker;
             _unlockedQueues = queues.ToDictionary(queue => queue.Id, queue => true);
             _queues = queues;
-            _brocker.FramesProcessed += BrockerOnFramesProcessed;
+            foreach (var worker in workersRepository.GetAll())
+            {
+                worker.Ready += WorkerOnReady;
+            }
         }
 
-        private void BrockerOnFramesProcessed(object sender, ProcessedEventArgs processedEventArgs)
+        private void WorkerOnReady(object sender, ProcessedEventArgs processedEventArgs)
         {
             lock (lockobk)
             {
                 _logger.Trace("queue {0} unlocked", processedEventArgs.QueueId);
                 _unlockedQueues[processedEventArgs.QueueId] = true;
             }
-            
         }
-
+        
         public async Task StartProcessingAsync(CancellationToken ct)
         {
             await Task.Run(() =>
