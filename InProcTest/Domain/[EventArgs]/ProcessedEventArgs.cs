@@ -8,11 +8,16 @@ namespace Domain
     [Serializable]
     public class ProcessedEventArgs : EventArgs
     {
-        public int QueueId { get; }
+        public int QueueId { get; set; }
 
         public ProcessedEventArgs(int id)
         {
             QueueId = id;
+        }
+
+        public ProcessedEventArgs()
+        {
+            
         }
     }
 }

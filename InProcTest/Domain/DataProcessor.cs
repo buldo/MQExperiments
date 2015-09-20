@@ -46,13 +46,17 @@ namespace Domain
                     {
                         if (_unlockedQueues[queue.Id])
                         {
-                            lock (lockobk)
+                            var toProcess = queue.DequeueAll();
+                            if (toProcess.Count != 0)
                             {
-                                _unlockedQueues[queue.Id] = false;
-                                _logger.Trace("queue {0} locked", queue.Id);
+                                lock (lockobk)
+                                {
+                                    _unlockedQueues[queue.Id] = false;
+                                    _logger.Trace("queue {0} locked", queue.Id);
+                                }
+
+                                _brocker.Process(toProcess);
                             }
-                            
-                            _brocker.Process(queue.DequeueAll());
                         }
                     }
                 }

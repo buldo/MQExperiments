@@ -170,6 +170,10 @@
       <Project>{0bb5f837-f356-4105-8201-2465f8a41720}</Project>
       <Name>NanoMsgRealization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NetMQFanInOut\NetMQFanInOut.csproj">
+      <Project>{d14c33ed-110a-412e-a08b-82d2a158cb98}</Project>
+      <Name>NetMQFanInOut</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NetMQRealization\NetMQRealization.csproj">
       <Project>{d4468ed4-2a2a-4a52-a6ef-76e0d06c1e0f}</Project>
       <Name>NetMQRealization</Name>
