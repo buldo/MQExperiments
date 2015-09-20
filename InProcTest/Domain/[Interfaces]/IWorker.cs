@@ -21,5 +21,7 @@ namespace Domain
         Task StartProcessingAsync(CancellationToken ct);
 
         void SetStatisticsCollector(IStatisticsCollector statisticsCollector);
+
+        event EventHandler<ProcessedEventArgs> Ready;
     }
 }

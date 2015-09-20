@@ -24,7 +24,9 @@ namespace Domain
         {
             StatisticsCollector = statisticsCollector;
         }
-        
+
+        public event EventHandler<ProcessedEventArgs> Ready;
+
         public abstract void Dispose();
 
         protected void ProcessFunction(int val)
@@ -40,6 +42,13 @@ namespace Domain
             //    //    break;
             //    //}
             //}
+        }
+
+
+        protected virtual void OnReady(int qId)
+        {
+            ProcessedEventArgs e = new ProcessedEventArgs(qId);
+            Ready?.Invoke(this, e);
         }
     }
 }
