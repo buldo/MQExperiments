@@ -25,6 +25,8 @@ namespace NetMQRepReq
         public AsyncWorker(int id, NetMQContext context, string address) : base(id)
         {
             _responseSocket = context.CreateResponseSocket();
+            _responseSocket.Options.ReceiveHighWatermark = 2;
+            _responseSocket.Options.SendHighWatermark = 2;
             _responseSocket.Options.Identity = BitConverter.GetBytes(id);
             _responseSocket.Connect(address);
         }

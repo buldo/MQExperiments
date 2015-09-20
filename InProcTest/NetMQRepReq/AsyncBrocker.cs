@@ -23,6 +23,8 @@ namespace NetMQRepReq
         public AsyncBrocker(NetMQContext context, string address)
         {
             _socket = context.CreateDealerSocket();
+            _socket.Options.SendHighWatermark = 1;
+            _socket.Options.ReceiveHighWatermark = 1;
             _socket.Bind(address);
             _socket.ReceiveReady += SocketReceiveReady;
             _poller.AddSocket(_socket);
