@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Realizations", "Realization
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetMQRealization", "NetMQRealization\NetMQRealization.csproj", "{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetMQRepReq", "NetMQRepReq\NetMQRepReq.csproj", "{555E374A-B7DA-46D5-AC7E-5A96DDF7098A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{555E374A-B7DA-46D5-AC7E-5A96DDF7098A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{555E374A-B7DA-46D5-AC7E-5A96DDF7098A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{555E374A-B7DA-46D5-AC7E-5A96DDF7098A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{555E374A-B7DA-46D5-AC7E-5A96DDF7098A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,5 +52,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0BB5F837-F356-4105-8201-2465F8A41720} = {D1B8579E-20CD-4196-A97F-7DBD4BA90844}
 		{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F} = {D1B8579E-20CD-4196-A97F-7DBD4BA90844}
+		{555E374A-B7DA-46D5-AC7E-5A96DDF7098A} = {D1B8579E-20CD-4196-A97F-7DBD4BA90844}
 	EndGlobalSection
 EndGlobal

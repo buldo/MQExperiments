@@ -12,6 +12,7 @@ using Domain.Statistics;
 using Microsoft.Practices.Unity;
 using NanoMsgRealization;
 using NetMQRealization;
+using NetMQRepReq;
 using Prism.Commands;
 using Prism.Mvvm;
 using Xceed.Wpf.DataGrid.Converters;
@@ -44,7 +45,8 @@ namespace InProcTest
 
             _statisticsCollector = new BaseStatisticsCollector();
             //_model = new TestModel(new NanoWorkersFabric(), new NanoBrockersFabric(), _statisticsCollector);
-            _model = new TestModel(new NetMQWorkersFabric(), new NetMQBrockersFabric(), _statisticsCollector);
+            //_model = new TestModel(new NetMQWorkersFabric(), new NetMQBrockersFabric(), _statisticsCollector);
+            _model = new TestModel(new AsyncWorkersFabric(), new AsyncBrockersFabric(), _statisticsCollector);
 
             StartCommand = new DelegateCommand(ExecuteMethod, () => !_isStarted);
             StopCommand = new DelegateCommand(() => _model.Stop(), () => _isStarted);

@@ -15,7 +15,7 @@ using NLog;
 
 namespace NetMQRealization
 {
-    public class NetMQBrocker : IBrocker, IDisposable
+    internal class NetMQBrocker : IBrocker, IDisposable
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -47,27 +47,27 @@ namespace NetMQRealization
                 {
 
                 
-                while (true)
-                {
-                    var ba = _pullSocket.ReceiveFrameBytes();
-                    if (ba != null)
+                    while (true)
                     {
-
-                        using (var ms = new MemoryStream())
+                        var ba = _pullSocket.ReceiveFrameBytes();
+                        if (ba != null)
                         {
-                            ms.Write(ba, 0, ba.Length);
-                            ms.Position = 0;
-                            var data = (ProcessedEventArgs)_formatter.Deserialize(ms);
-                            _logger.Trace("Brocker received result queue {0}", data.QueueId);
-                            OnFramesProcessed(data);
+
+                            using (var ms = new MemoryStream())
+                            {
+                                ms.Write(ba, 0, ba.Length);
+                                ms.Position = 0;
+                                var data = (ProcessedEventArgs)_formatter.Deserialize(ms);
+                                _logger.Trace("Brocker received result queue {0}", data.QueueId);
+                                OnFramesProcessed(data);
+                            }
+                        }
+                        else
+                        {
+                            _logger.Trace("Brocker not received");
+                            Thread.Sleep(200);
                         }
                     }
-                    else
-                    {
-                        _logger.Trace("Brocker not received");
-                        Thread.Sleep(200);
-                    }
-                }
                 }
                 catch (Exception)
                 {
@@ -76,33 +76,6 @@ namespace NetMQRealization
                 }
 
             });
-
-            //Task.Run(() =>
-            //{
-            //    var _formatter = new BinaryFormatter();
-            //    while (true)
-            //    {
-            //        //var ba = _socket.Receive();
-            //        var ba = _pushSocket.Receive();
-            //        if (ba != null)
-            //        {
-
-            //            using (var ms = new MemoryStream())
-            //            {
-            //                ms.Write(ba, 0, ba.Length);
-            //                ms.Position = 0;
-            //                var data = (ProcessedEventArgs) _formatter.Deserialize(ms);
-            //                _logger.Trace("Brocker received result queue {0}", data.QueueId);
-            //                OnFramesProcessed(data);
-            //            }
-            //        }
-            //        else
-            //        {
-            //            _logger.Trace("Brocker not received");
-            //           Thread.Sleep(200);
-            //        }
-            //    }
-            //});
 
         }
 
@@ -122,7 +95,7 @@ namespace NetMQRealization
                 _formatter.Serialize(ms, frames.ToList());
                 ms.Position = 0;
                 var array = ms.ToArray();
-                _pushSocket.Send(array);
+                _pushSocket.SendFrame(array);
                 _logger.Trace("Sended {0}q", frames.FirstOrDefault()?.QueueId??0);
             }
         }
@@ -134,21 +107,6 @@ namespace NetMQRealization
         {
             FramesProcessed?.Invoke(this, e);
         }
-
-        private void ListenerOnReceivedMessage(int socketId)
-        {
-            _logger.Trace("Replay received");
-            var ba = _pullSocket.Receive();
-            
-            using (var ms = new MemoryStream())
-            {
-                ms.Write(ba,0,ba.Length);
-                ms.Position = 0;
-                var data = (ProcessedEventArgs)_formatter.Deserialize(ms);
-                OnFramesProcessed(data);
-            }
-        }
-
         #region IDisposable Support
 
 

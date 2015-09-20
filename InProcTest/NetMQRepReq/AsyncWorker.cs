@@ -1,53 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain;
-using Domain.Statistics;
 using NetMQ;
 using NetMQ.Sockets;
 using NLog;
 
-namespace NetMQRealization
+namespace NetMQRepReq
 {
-    internal class NetMQWorker : BaseWorker
+    internal class AsyncWorker : BaseWorker
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IFormatter _formatter = new BinaryFormatter();
 
-        private readonly PushSocket _pushSocket;
-        private readonly PullSocket _pullSocket;
+        private readonly ResponseSocket _responseSocket;
 
-        public NetMQWorker(int id, string pushAddress, string pullAddress, NetMQContext context) : base(id)
+        public AsyncWorker(int id, NetMQContext context, string address) : base(id)
         {
-            _pullSocket = context.CreatePullSocket();
-            _pushSocket = context.CreatePushSocket();
-            _pushSocket.Connect(pushAddress);
-            _pullSocket.Bind(pullAddress+id);
+            _responseSocket = context.CreateResponseSocket();
+            _responseSocket.Options.Identity = BitConverter.GetBytes(id);
+            _responseSocket.Connect(address);
         }
 
-        public async override Task StartProcessingAsync(CancellationToken ct)
+        public override async Task StartProcessingAsync(CancellationToken ct)
         {
             await Task.Run(() =>
             {
-                int qId =0;
+                int qId = 0;
                 while (!ct.IsCancellationRequested)
                 {
                     using (var ms = new MemoryStream())
                     {
-                        var dt = _pullSocket.ReceiveFrameBytes();
+                        var dt = _responseSocket.ReceiveMultipartMessage();
                         _logger.Trace("Worker {0} received", Id);
-                        ms.Write(dt,0,dt.Length);
+                        ms.Write(dt[0].ToByteArray(), 0, dt[0].MessageSize);
                         ms.Position = 0;
-                        var data = (List<Frame>)_formatter.Deserialize(ms);
+                        var data = (List<Frame>) _formatter.Deserialize(ms);
                         foreach (var frame in data)
                         {
                             ProcessFunction(frame.Data);
-                                 
+
                             qId = frame.QueueId;
                         }
                         _logger.Trace("Worker {0} {1} fr processed", Id, qId);
@@ -58,25 +57,27 @@ namespace NetMQRealization
                     {
                         while (true)
                         {
-                                 
+
                         }
                     }
 
                     using (var ms = new MemoryStream())
                     {
                         _formatter.Serialize(ms, new ProcessedEventArgs(qId));
-                        _pushSocket.SendFrame(ms.ToArray());
+                        var mqMessage = new NetMQMessage();
+                        mqMessage.AppendEmptyFrame();
+                        mqMessage.Append(ms.ToArray());
+                        _responseSocket.SendMultipartMessage(mqMessage);
                         _logger.Trace("Worker {0} sended", Id);
                     }
-                         
+
                 }
-             }, ct);
+            }, ct);
         }
 
         public override void Dispose()
         {
-            _pullSocket.Dispose();
-            _pushSocket.Dispose();
+            _responseSocket.Dispose();
         }
     }
 }
