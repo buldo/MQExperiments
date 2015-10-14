@@ -5,6 +5,7 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -12,11 +13,16 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
+        
+        DomainModel dm = new DomainModel();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        Parent root = (Parent)fxmlLoader.load(getClass().getResource("/fxml/Scene.fxml").openStream());
+        FXMLController controller = fxmlLoader.<FXMLController>getController();
+        controller.setController(dm);
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
-        
+                
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.show();

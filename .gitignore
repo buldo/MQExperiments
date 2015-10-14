@@ -1,1 +1,5 @@
 /.project
+/JavaServer/target/
+/GradleJavaServer/.nb-gradle/
+/GradleJavaServer/build/
+.idea/
