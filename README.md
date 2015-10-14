@@ -1,2 +1,4 @@
-# NanoMsgTest
-Small example how to connect C# and JAVA programs with nanomsg
+# MQTest
+Some small tests of MQs
+* InProcTest - inproc load balancing. Partly works.
+

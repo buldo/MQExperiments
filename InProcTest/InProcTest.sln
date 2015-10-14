@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InProcTest", "InProcTest\InProcTest.csproj", "{EEEAB12B-854B-4483-AEB4-9CF609C42252}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0BB5F837-F356-4105-8201-2465F8A41720} = {0BB5F837-F356-4105-8201-2465F8A41720}
+		{4FC3BCAE-F13F-4640-8E6C-83D2D78BFE7A} = {4FC3BCAE-F13F-4640-8E6C-83D2D78BFE7A}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{4FC3BCAE-F13F-4640-8E6C-83D2D78BFE7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NanoMsgRealization", "NanoMsgRealization\NanoMsgRealization.csproj", "{0BB5F837-F356-4105-8201-2465F8A41720}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Realizations", "Realizations", "{D1B8579E-20CD-4196-A97F-7DBD4BA90844}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetMQRealization", "NetMQRealization\NetMQRealization.csproj", "{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetMQRepReq", "NetMQRepReq\NetMQRepReq.csproj", "{555E374A-B7DA-46D5-AC7E-5A96DDF7098A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetMQFanInOut", "NetMQFanInOut\NetMQFanInOut.csproj", "{D14C33ED-110A-412E-A08B-82D2A158CB98}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEEAB12B-854B-4483-AEB4-9CF609C42252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEEAB12B-854B-4483-AEB4-9CF609C42252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEEAB12B-854B-4483-AEB4-9CF609C42252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEEAB12B-854B-4483-AEB4-9CF609C42252}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FC3BCAE-F13F-4640-8E6C-83D2D78BFE7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FC3BCAE-F13F-4640-8E6C-83D2D78BFE7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FC3BCAE-F13F-4640-8E6C-83D2D78BFE7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FC3BCAE-F13F-4640-8E6C-83D2D78BFE7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BB5F837-F356-4105-8201-2465F8A41720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BB5F837-F356-4105-8201-2465F8A41720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BB5F837-F356-4105-8201-2465F8A41720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BB5F837-F356-4105-8201-2465F8A41720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{555E374A-B7DA-46D5-AC7E-5A96DDF7098A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{555E374A-B7DA-46D5-AC7E-5A96DDF7098A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{555E374A-B7DA-46D5-AC7E-5A96DDF7098A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{555E374A-B7DA-46D5-AC7E-5A96DDF7098A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D14C33ED-110A-412E-A08B-82D2A158CB98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D14C33ED-110A-412E-A08B-82D2A158CB98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D14C33ED-110A-412E-A08B-82D2A158CB98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D14C33ED-110A-412E-A08B-82D2A158CB98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0BB5F837-F356-4105-8201-2465F8A41720} = {D1B8579E-20CD-4196-A97F-7DBD4BA90844}
+		{D4468ED4-2A2A-4A52-A6EF-76E0D06C1E0F} = {D1B8579E-20CD-4196-A97F-7DBD4BA90844}
+		{555E374A-B7DA-46D5-AC7E-5A96DDF7098A} = {D1B8579E-20CD-4196-A97F-7DBD4BA90844}
+		{D14C33ED-110A-412E-A08B-82D2A158CB98} = {D1B8579E-20CD-4196-A97F-7DBD4BA90844}
+	EndGlobalSection
+EndGlobal
