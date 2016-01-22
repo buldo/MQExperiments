@@ -4,6 +4,7 @@
 
 import nanomsg.reqrep.RepSocket;
 
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -25,12 +26,15 @@ public class NanoMsgServer {
         executor.submit( () -> {
             try{
                 _repSocket.bind("tcp://*:6789");
+
                 System.out.println("Сервер начинает прослушивание");
                 while (!Thread.interrupted()) {
-                    String receivedData = _repSocket.recvString();
-                    System.out.println(receivedData);
+                    byte[] receivedData = _repSocket.recvBytes();
+                    System.out.println(new String(receivedData,"UTF-8"));
                     _repSocket.send(receivedData);
                 }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             } finally {
                 _repSocket.close();
             }
